@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://unpkg.com/phylotree/phylotree.js"></script>
+  <link href="https://unpkg.com/phylotree/phylotree.css" rel="stylesheet">
+</head>
+
+<body>
+    <svg id="tree_display"></svg>
+
+    <script>
+      var height = 800;
+      var width = 1000;
+      var newick_path = "example_tree.newick";
+
+      // tree from Yokoyama et al http://www.ncbi.nlm.nih.gov/pubmed/18768804
+      d3.text(newick_path, function (newick) {
+	  var tree = d3.layout.phylotree()
+	  // create a tree layout object
+	      .svg(d3.select("#tree_display"))
+	      .options({
+		  "left-right-spacing": "fit-to-size",
+		  "top-bottom-spacing": "fit-to-size"
+	      })
+	      .size([height, width]);
+
+	  tree(newick)
+	      .layout();
+      });
+    </script>
+</body>
+
+</html>
